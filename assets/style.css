@@ -2,3 +2,21 @@
 :root .example-grid{grid-template-columns:repeat(3,minmax(0,1fr))}.example-grid .card{gap:12px}.example-grid .card p{margin:0}.example-grid .button{text-align:center}.block figcaption,figcaption{font-size:12px;color:var(--muted)}figure.block{margin:0}@media(max-width:760px){:root .example-grid{grid-template-columns:1fr}}
 :root .example-grid .eyebrow{flex:none}
 .screenshot{grid-column:1/-1}.screenshot img{display:block;width:100%;max-width:1120px;height:auto;border:1px solid var(--line);border-radius:10px;background:#10182a}.screenshot figcaption{margin-top:8px}.blocks>.block p{white-space:normal}.lesson[id^="variants-"] .blocks{grid-template-columns:repeat(2,minmax(0,1fr))}.lesson[id^="variants-"] .block{padding:18px;border:1px solid var(--line);border-radius:10px;background:#fafafb}@media(max-width:760px){.lesson[id^="variants-"] .blocks{grid-template-columns:1fr}}
+
+/* Downloads: primary materials first, optional source files on demand. */
+.resource-downloads{margin:24px 0 40px}.resource-downloads .downloads{margin:0 0 16px}
+.source-files{background:var(--paper);border:1px solid var(--line);border-radius:12px;overflow:hidden}
+.source-files summary{cursor:pointer;padding:18px 22px;font-size:15px;font-weight:700;min-height:56px}
+.source-files summary::marker{color:var(--muted)}.source-files summary:hover{background:#fafafa}
+.source-count{display:inline-block;margin-left:10px;font-size:12px;font-weight:400;color:var(--muted)}
+.source-list{list-style:none;margin:0;padding:0 22px;border-top:1px solid var(--line)}
+.source-file{display:flex;align-items:center;justify-content:space-between;gap:24px;padding:14px 0}
+.source-file+.source-file{border-top:1px solid var(--line)}
+.source-info{min-width:0;display:grid;grid-template-columns:minmax(190px,240px) 1fr;gap:20px;align-items:baseline}
+.source-name{font:600 13px/1.5 Consolas,monospace;overflow-wrap:anywhere}
+.source-purpose{font-size:13px;line-height:1.5;color:var(--muted)}
+.source-download{flex-shrink:0;font-size:13px;padding:10px 4px;min-height:44px;text-decoration:none}
+.source-download:hover{text-decoration:underline;color:var(--red)}
+@media(max-width:760px){.source-info{grid-template-columns:1fr;gap:4px}}
+@media(max-width:640px){.downloads .button{text-align:center}.source-files summary{padding:16px}.source-list{padding:0 16px}.source-file{gap:12px}.source-count{margin-left:5px}}
+@media print{.resource-downloads{display:none}}
