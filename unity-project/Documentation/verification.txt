@@ -1,0 +1,2 @@
+PASS: start, closed level, early exit, pause, resume, win, unlock, loss, retry, volume, final level, UI raycasts, button callbacks, hold/release, focus-loss callback.
+These checks call game methods; manual input tests are separate.
