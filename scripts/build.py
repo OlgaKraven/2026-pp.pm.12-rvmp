@@ -347,9 +347,27 @@ def build(data):
         (OUT/file).write_text(shell(meta,file,title,lead,body),encoding='utf-8')
     write('index.html',meta['title'],'Условия, этапы выполнения и сдача задания.',
           '<div class="downloads"><a class="button primary" href="downloads/assignment.pdf">Задание студенту · PDF</a></div>'+pages(data['assignment']))
-    code_links=''.join(f'<a class="button" href="downloads/{ESC(item["name"])}">{ESC(item["name"])}</a>' for item in data['code_files'])
+    purposes = {
+        page['title'].removeprefix('Код · '): next(
+            (block['text'] for block in page['blocks'] if block['title'] == 'Назначение'), '')
+        for page in data['guide'] if page['title'].startswith('Код · ')
+    }
+    code_links = ''.join(
+        '<li class="source-file"><div class="source-info">'
+        f'<span class="source-name">{ESC(item["name"])}</span>'
+        f'<span class="source-purpose">{ESC(purposes.get(item["name"], ""))}</span></div>'
+        f'<a class="source-download" href="downloads/{ESC(item["name"])}" download '
+        f'aria-label="Скачать {ESC(item["name"])}">Скачать <span aria-hidden="true">↓</span></a></li>'
+        for item in data['code_files'])
+    source_panel = (
+        '<details class="source-files"><summary>Отдельные скрипты '
+        f'<span class="source-count">{len(data["code_files"])} файлов</span></summary>'
+        '<ul class="source-list">'+code_links+'</ul></details>')
     write('lessons.html','Как выполнить задание','Теория, пронумерованные действия, крупные снимки работающего прототипа и полный код. Выдаётся по решению преподавателя.',
-          '<div class="downloads"><a class="button primary" href="downloads/guide.pdf">Инструкция · PDF</a><a class="button primary" href="downloads/PP12-CrystalRoute-UnityProject.zip">Unity-проект · ZIP</a>'+code_links+'</div>'+pages(data['guide']))
+          '<section class="resource-downloads" aria-label="Материалы для работы">'
+          '<div class="downloads"><a class="button primary" href="downloads/guide.pdf">Инструкция · PDF</a>'
+          '<a class="button" href="downloads/PP12-CrystalRoute-UnityProject.zip" download>Unity-проект · ZIP</a></div>'
+          +source_panel+'</section>'+pages(data['guide']))
     write('areas.html','Предметные области','Индивидуальные условия задания. Номер варианта назначает преподаватель.',pages(data['areas']))
     # Compatibility addresses contain no educational content or duplicate files.
     for old,new in [('example.html','index.html'),('example-guide.html','lessons.html'),('example-result.html','lessons.html')]:
