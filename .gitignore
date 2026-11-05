@@ -12,6 +12,8 @@ unity-project/UserSettings/
 unity-project/Build/
 unity-project/compile.log
 .DS_Store
+qa/
+revise.py
 
 unity-project/Assets/_Recovery/
 unity-project/Assets/_Recovery.meta
