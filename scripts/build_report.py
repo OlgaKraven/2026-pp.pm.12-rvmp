@@ -99,6 +99,10 @@ def build():
         for attr in ('ascii','hAnsi','eastAsia','cs'):fonts.set(qn('w:'+attr),'Times New Roman')
         for attr in ('asciiTheme','hAnsiTheme','eastAsiaTheme','cstheme'):fonts.attrib.pop(qn('w:'+attr),None)
     for paragraph in doc.paragraphs:
+        if paragraph.text.startswith('Указать полную ссылку, доступную проверяющему.'):
+            ts=paragraph._p.xpath('.//w:t')
+            ts[0].text='Указать полную ссылку, доступную проверяющему, и хеш проверенного коммита. Репозиторий обязателен для сдачи этой практики.'
+            for t in ts[1:]:t.text=''
         if paragraph.style.name in ('Heading 1','Heading 2','Heading 3'):
             if paragraph.runs:paragraph.runs[0].text=' '+paragraph.runs[0].text
         if paragraph.text == 'Состав передаваемых материалов':
