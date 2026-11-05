@@ -50,7 +50,7 @@ def main():
     for key,name in [('assignment','index.html'),('guide','lessons.html'),('areas','areas.html')]: (OUT/name).write_text(html_page(d,key),encoding='utf-8')
     for item in d['code_files']:(dest/item['name']).write_bytes((ROOT/item['path']).read_text(encoding='utf-8').encode('utf-8'))
     with zipfile.ZipFile(dest/'PP12-CrystalRoute-UnityProject.zip','w',zipfile.ZIP_DEFLATED) as z:
-        for path in sorted((ROOT/'unity-project').rglob('*')):
+        for path in sorted((ROOT/'unity-project').rglob('*'),key=lambda p:p.relative_to(ROOT/'unity-project').as_posix()):
             if not path.is_file():continue
             rel=path.relative_to(ROOT/'unity-project')
             if any(x in rel.parts for x in ['Library','Temp','Logs','obj','UserSettings','Build','.vs','_Recovery','Documentation','Editor']):continue
@@ -58,6 +58,7 @@ def main():
             data=path.read_bytes()
             if path.suffix.lower() in ['.cs','.meta','.asset','.unity','.json','.txt','.md'] or path.name=='.gitignore':data=data.replace(b'\r\n',b'\n')
             info=zipfile.ZipInfo('CrystalRoute/'+rel.as_posix(),(2026,11,5,0,0,0));info.compress_type=zipfile.ZIP_DEFLATED
+            info.create_system=3;info.external_attr=0o100644<<16
             z.writestr(info,data)
     inputs=[ROOT/'content/course.json',ROOT/'scripts/design.py']+[ROOT/item['path'] for item in d['code_files']]
     source_digest=hashlib.sha256(''.join(p.read_text(encoding='utf-8') for p in inputs).encode('utf-8')).hexdigest()
